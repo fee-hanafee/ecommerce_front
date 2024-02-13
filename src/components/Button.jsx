@@ -1,16 +1,16 @@
 import React from "react";
 
-export default function Button({ children, bg, color, width }) {
-  const classess = `${
-    bg ? "bg-" + bg + "-500" + " hover:bg-" + bg + "-600" : ""
-  } ${color ? " text-white" : ""}
-  ${width ? " w-full" : ""}`;
-
+export default function Button({
+  children,
+  bg = "bg-blue-500 hover:bg-blue-600",
+}) {
+  const finalClass = bg == "green" ? "bg-green-500 hover:bg-green-600" : bg;
   return (
-    <>
-      <button className={`${classess} rounded-md px-3 py-1.5`}>
-        {children}
-      </button>
-    </>
+    <button
+      className={` ${finalClass} rounded-md px-3 py-1.5  w-full text-white`}
+    >
+      {children}
+    </button>
   );
 }
+

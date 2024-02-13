@@ -1,0 +1,4 @@
+const NAV_BAR_HEIGHT = '100px'
+const LOGO_BAR_HEIGHT = '40px'
+
+export {NAV_BAR_HEIGHT, LOGO_BAR_HEIGHT}

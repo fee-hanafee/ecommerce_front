@@ -1,13 +1,23 @@
 import React from "react";
-import Button from "./components/Button";
-import Input from "./components/Input";
-import Spinner from "./components/Spinner";
+import Router from "./routes";
+import { ToastContainer, Slide } from "react-toastify";
+import useAuth from "./features/auth/hooks/use-auth";
+import Loader from './components/Loader'
 
 function App() {
+  const {initialLoad} = useAuth()
+  
+
+  if(initialLoad) return <Loader/>
   return (
     <>
-    <Input>Helo</Input>
-      
+      <Router />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        theme="colored"
+        transition={Slide}
+      />
     </>
   );
 }
