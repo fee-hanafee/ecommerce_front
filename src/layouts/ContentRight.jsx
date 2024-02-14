@@ -18,7 +18,7 @@ export default function ContentRight() {
       ? "bg-blue-500"
       : "";
   return (
-    <div className="flex-none gap-4">
+    <div className="flex-none gap-8 px-8">
       <ShoppingCartIcon role="button" className="text-red-500" />
       <div className="dropdown dropdown-bottom dropdown-end">
         <div tabIndex={0} role="button" className="text-white">
