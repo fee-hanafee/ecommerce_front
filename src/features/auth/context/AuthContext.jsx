@@ -2,6 +2,7 @@ import { createContext, useState } from "react";
 
 import { getToken, storeToken, claerToken } from "../../../utils/local-store";
 import * as authApi from "../../../api/auth-api";
+import * as productApi from "../../../api/product-api";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 
@@ -10,9 +11,15 @@ export const AuthContext = createContext();
 export default function AuthContextProvider({ children }) {
   const [authUser, setAuthUser] = useState(null);
   const [initialLoad, setInitialLoad] = useState(true);
-  console.log(authUser);
+  const [product, setProduct] = useState([]);
+
+
   useEffect(() => {
-    
+    productApi
+      .fetchProduct()
+      .then((item) => setProduct(item.data.product))
+      .catch((err) => console.log(err));
+
     if (getToken()) {
       authApi
         .fetchMe()
@@ -41,12 +48,12 @@ export default function AuthContextProvider({ children }) {
   const logout = async () => {
     setAuthUser(null);
     claerToken();
-    toast.error("Logout")
+    toast.error("Logout");
   };
 
   return (
     <AuthContext.Provider
-      value={{ initialLoad, register, login, logout, authUser }}
+      value={{ initialLoad, register, login, logout, authUser,product }}
     >
       {children}
     </AuthContext.Provider>

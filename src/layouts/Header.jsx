@@ -13,7 +13,7 @@ const menuList = [
   },
   {
     id: 2,
-    name: "STORE",
+    name: "SHOP",
     to: "/shop",
   },
 ];
