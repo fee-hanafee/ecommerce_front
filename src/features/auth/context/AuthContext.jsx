@@ -12,12 +12,16 @@ export default function AuthContextProvider({ children }) {
   const [authUser, setAuthUser] = useState(null);
   const [initialLoad, setInitialLoad] = useState(true);
   const [product, setProduct] = useState([]);
+  const [selectProduct, setSelectProduct] = useState([])
 
-
+ 
   useEffect(() => {
     productApi
       .fetchProduct()
-      .then((item) => setProduct(item.data.product))
+      .then((item) => {
+        setProduct(item.data.product);
+        setSelectProduct(item.data.product)
+      })
       .catch((err) => console.log(err));
 
     if (getToken()) {
@@ -51,9 +55,30 @@ export default function AuthContextProvider({ children }) {
     toast.error("Logout");
   };
 
+  const selectProductType = (type) => {
+    if(type != 5) {
+
+      setSelectProduct(product.filter((el)=>el.typeId == type))
+    } else {
+      setSelectProduct([...product])
+    }
+
+
+  };
+
   return (
     <AuthContext.Provider
-      value={{ initialLoad, register, login, logout, authUser,product }}
+      value={{
+        initialLoad,
+        register,
+        login,
+        logout,
+        authUser,
+        product,
+        selectProduct,
+        selectProductType
+   
+      }}
     >
       {children}
     </AuthContext.Provider>

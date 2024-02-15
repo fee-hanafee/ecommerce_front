@@ -1,12 +1,12 @@
 import React from "react";
 import useAuth from "../../features/auth/hooks/use-auth";
 export default function () {
-  const { product } = useAuth();
+  const { product,selectProduct } = useAuth();
 
   return (
     <div className="">
       <div className="flex flex-wrap gap-4 p-4 justify-center mx-auto">
-        {product.map((item) => {
+        {selectProduct.map((item) => {
         
           return (
             <div
