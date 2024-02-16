@@ -20,8 +20,8 @@ export default function FeatureProduct() {
             return (
               <div onClick={()=>console.log(item)}
                 key={item.id}
-                className="h-[100%] shadow bg-gray-600 rounded-md"
-                role="button"
+                className="h-[100%] shadow  bg-gray-600 rounded-md"
+               
               >
                 <div className="w-56 bg-white">
                   <img src={`${item?.image?.[0]?.image}`} />
@@ -31,7 +31,7 @@ export default function FeatureProduct() {
                     <h1 className="text-2xl text-white">{item.name}</h1>
                     <h5 className="text-white font-semibold">{item.price} ฿</h5>
                   </div>
-                  <div className="flex justify-center items-center">
+                  <div className="flex justify-center items-center py-2">
                     <button className="text-white  px-6 py-1.5 rounded-full font-bold bg-red-500 hover:scale-110">BUY</button>
                   </div>
                 </div>

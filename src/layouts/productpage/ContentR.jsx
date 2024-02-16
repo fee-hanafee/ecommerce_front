@@ -1,22 +1,24 @@
 import React from "react";
 import useAuth from "../../features/auth/hooks/use-auth";
+
+import { Link } from "react-router-dom";
+
 export default function () {
-  const { product,selectProduct } = useAuth();
+  const { buyNow, selectProduct } = useAuth();
 
   return (
     <div className="">
       <div className="flex flex-wrap gap-4 p-4 justify-center mx-auto">
         {selectProduct.map((item) => {
-        
           return (
             <div
               key={item.id}
               className="flex flex-col items-center justify-center bg-gray-100 rounded-lg w-[320px] px-4 py-4"
-              role="button"
             >
               <div>
                 <img src={item?.image?.[0].image} />
               </div>
+              <hr className=" border border-red-500 w-full" />
               <div className="font-bold text-2xl text-gray-600 py-2">
                 {item.name}
               </div>
@@ -24,10 +26,20 @@ export default function () {
                 {item.price}
               </div>
               <div className="flex flex-row gap-2">
-                <button className="text-sx border bg-red-600 text-white px-2 py-2 rounded-lg">
-                  BUY NOW
-                </button>
-                <button className="text-sx border bg-red-600 text-white px-2 py-2 rounded-lg">
+                <Link to="/cart">
+                  <button
+                    className="text-sx border bg-red-600 text-white px-2 py-2 rounded-lg"
+                    onClick={() => {
+                      buyNow(item);
+                    }}
+                  >
+                    BUY NOW
+                  </button>
+                </Link>
+                <button
+                  className="text-sx border bg-red-600 text-white px-2 py-2 rounded-lg"
+                  onClick={() => buyNow(item)}
+                >
                   ADD CART
                 </button>
               </div>

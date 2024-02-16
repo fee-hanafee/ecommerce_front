@@ -3,6 +3,7 @@ import { createContext, useState } from "react";
 import { getToken, storeToken, claerToken } from "../../../utils/local-store";
 import * as authApi from "../../../api/auth-api";
 import * as productApi from "../../../api/product-api";
+import * as userApi from "../../../api/user-api";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 
@@ -12,15 +13,16 @@ export default function AuthContextProvider({ children }) {
   const [authUser, setAuthUser] = useState(null);
   const [initialLoad, setInitialLoad] = useState(true);
   const [product, setProduct] = useState([]);
-  const [selectProduct, setSelectProduct] = useState([])
+  const [selectProduct, setSelectProduct] = useState([]);
 
- 
+  const [cart, setCart] = useState([]);
+
   useEffect(() => {
     productApi
       .fetchProduct()
       .then((item) => {
         setProduct(item.data.product);
-        setSelectProduct(item.data.product)
+        setSelectProduct(item.data.product);
       })
       .catch((err) => console.log(err));
 
@@ -44,7 +46,7 @@ export default function AuthContextProvider({ children }) {
 
   const login = async (user) => {
     const respon = await authApi.login(user);
-    console.log(respon.data);
+
     setAuthUser(respon.data.user);
     storeToken(respon.data.accessToken);
   };
@@ -56,14 +58,30 @@ export default function AuthContextProvider({ children }) {
   };
 
   const selectProductType = (type) => {
-    if(type != 5) {
-
-      setSelectProduct(product.filter((el)=>el.typeId == type))
+    if (type != 5) {
+      setSelectProduct(product.filter((el) => el.typeId == type));
     } else {
-      setSelectProduct([...product])
+      setSelectProduct([...product]);
     }
+  };
 
+  const buyNow = async (item) => {
+    try {
+      await userApi.createItemOnCart({ productId: item.id });
+      toast.success("add to cart");
+    } catch (err) {
+      toast.error("idk");
+    }
+  };
 
+  const cancelItem = async (id) => {
+    try {
+      setCart(cart.filter((el) => el.id != id));
+      console.log(id);
+      await userApi.deleteItemCart(id);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -76,8 +94,12 @@ export default function AuthContextProvider({ children }) {
         authUser,
         product,
         selectProduct,
-        selectProductType
-   
+        selectProductType,
+        buyNow,
+        cart,
+        cancelItem,
+
+        setCart,
       }}
     >
       {children}

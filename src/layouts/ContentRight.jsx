@@ -9,7 +9,7 @@ import useAuth from "../features/auth/hooks/use-auth";
 import { Link } from "react-router-dom";
 
 export default function ContentRight() {
-  const { authUser, logout } = useAuth();
+  const { authUser, logout} = useAuth();
   const [open, setOpen] = useState({ register: false, login: false });
   const bg =
     authUser?.role == "USER"
@@ -19,7 +19,9 @@ export default function ContentRight() {
       : "";
   return (
     <div className="flex-none gap-8 px-8">
+      <Link to="/cart">
       <ShoppingCartIcon role="button" className="text-red-500" />
+      </Link>
       <div className="dropdown dropdown-bottom dropdown-end">
         <div tabIndex={0} role="button" className="text-white">
           <PersonIcon className={`${bg} mb-0.5  `} />
