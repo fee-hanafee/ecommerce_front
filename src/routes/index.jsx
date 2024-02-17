@@ -6,6 +6,7 @@ import ProfilePage from "../pages/ProfilePage";
 import ProductPage from "../pages/ProductPage";
 import Container from "../layouts/Container";
 import Cart from "../layouts/cart/Cart";
+import { ContextRLProvider } from "../layouts/cart/context/ContextRL";
 
 const route = createBrowserRouter([
   {
@@ -21,17 +22,23 @@ const route = createBrowserRouter([
         element: <ProductPage />,
       },
       {
-        path:"admin",
-        element: <AdminPage/>
+        path: "admin",
+        element: <AdminPage />,
       },
       {
         path: "me",
-        element: <ProfilePage/>
+        element: <ProfilePage />,
       },
       {
         path: "/cart",
-        element: <Cart/>
-      }
+        element: (
+          <>
+            <ContextRLProvider>
+              <Cart />
+            </ContextRLProvider>
+          </>
+        ),
+      },
     ],
   },
 ]);

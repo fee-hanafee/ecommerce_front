@@ -19,7 +19,7 @@ export default function Container() {
                 FLASH SALE
               </h1>
               <Link to="/shop">
-                <div className="border border-2 border-red-500 rounded-full px-2 py-1.5 m-2 font-bold hover:bg-red-500 hover:text-white transition-all">
+                <div className=" border-2 border-red-500 rounded-full px-2 py-1.5 m-2 font-bold hover:bg-red-500 hover:text-white transition-all">
                   VIEW ALL
                 </div>
               </Link>

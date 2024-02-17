@@ -6,3 +6,7 @@ export const createItemOnCart = (productId) =>
 export const getCart = () => axios.get("/user/cart");
 
 export const deleteItemCart = (id) => axios.delete(`/user/cart/${id}`);
+
+export const updateItemCart = (data) => axios.patch("/user/cart", data);
+
+export const createOrder = (data) => axios.post("/user/order", data);

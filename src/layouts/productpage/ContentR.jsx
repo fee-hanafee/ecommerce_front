@@ -2,9 +2,10 @@ import React from "react";
 import useAuth from "../../features/auth/hooks/use-auth";
 
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function () {
-  const { buyNow, selectProduct } = useAuth();
+  const { buyNow, selectProduct,fetchItemCart } = useAuth();
 
   return (
     <div className="">
@@ -31,6 +32,7 @@ export default function () {
                     className="text-sx border bg-red-600 text-white px-2 py-2 rounded-lg"
                     onClick={() => {
                       buyNow(item);
+                      
                     }}
                   >
                     BUY NOW
@@ -38,7 +40,10 @@ export default function () {
                 </Link>
                 <button
                   className="text-sx border bg-red-600 text-white px-2 py-2 rounded-lg"
-                  onClick={() => buyNow(item)}
+                  onClick={() => {
+                    buyNow(item);
+                    toast.success("Add to cart");
+                  }}
                 >
                   ADD CART
                 </button>

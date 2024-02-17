@@ -3,7 +3,7 @@ import CartL from "./CartL";
 import CartR from "./CartR";
 
 export default function Cart() {
-  // const [left,right] = children
+
   return (
     <div className="pt-[100px] ">
       <div className="  w-[80%] mx-auto">
@@ -14,7 +14,7 @@ export default function Cart() {
           <div className="border col-span-7">
             <CartL />
           </div>
-          <div className="bg-blue-300 col-span-5">
+          <div className="col-span-5">
             <CartR />
           </div>
         </div>

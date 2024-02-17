@@ -14,7 +14,7 @@ export default function AuthContextProvider({ children }) {
   const [initialLoad, setInitialLoad] = useState(true);
   const [product, setProduct] = useState([]);
   const [selectProduct, setSelectProduct] = useState([]);
-
+  const [address, setAddress] = useState('')
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
@@ -68,7 +68,8 @@ export default function AuthContextProvider({ children }) {
   const buyNow = async (item) => {
     try {
       await userApi.createItemOnCart({ productId: item.id });
-      toast.success("add to cart");
+      console.log(item);
+      console.log(cart);
     } catch (err) {
       toast.error("idk");
     }
@@ -77,8 +78,42 @@ export default function AuthContextProvider({ children }) {
   const cancelItem = async (id) => {
     try {
       setCart(cart.filter((el) => el.id != id));
-      console.log(id);
+
       await userApi.deleteItemCart(id);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchItemCart = async () => {
+    try {
+      const respon = await userApi.getCart();
+
+      setCart(respon.data.item);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleaddress = (input) => {
+    setAddress(input)
+   
+  };
+
+
+  const submitOrder = async (e) => {
+    try {
+      e.preventDefault();
+      if(address||address.trim()!='') {
+        if(cart.length == 0) {
+          return toast.error("add item")
+        }
+        
+        await userApi.createOrder({adress:address})
+        toast.success("order on the buss")
+
+      }
+
     } catch (err) {
       console.log(err);
     }
@@ -98,8 +133,11 @@ export default function AuthContextProvider({ children }) {
         buyNow,
         cart,
         cancelItem,
-
+        fetchItemCart,
         setCart,
+        submitOrder,
+        handleaddress,
+        address
       }}
     >
       {children}
