@@ -19,8 +19,6 @@ export default function CartR() {
   const { totalPrice, updatePrice } = useRL();
   const [error, setError] = useState("");
 
-
-
   useEffect(() => {
     updatePrice();
   }, []);
@@ -68,7 +66,6 @@ export default function CartR() {
               if (!address || address.trim() == "") {
                 setError("error");
               }
-              
             }}
           >
             Submit

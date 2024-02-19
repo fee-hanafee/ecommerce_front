@@ -3,14 +3,12 @@ import { useState } from "react";
 import useAuth from "../../../features/auth/hooks/use-auth";
 import * as userApi from "../../../api/user-api";
 import useRL from "../context/ContextRL";
+import { useEffect } from "react";
 
 export default function AmontItem({ amount, price, id }) {
-  const { cancelItem } = useAuth();
+  const { cancelItem} = useAuth();
   const { updatePrice } = useRL();
   const [count, setCount] = useState(amount);
-
-
-
 
   const updateItemCart = async (productId, item) => {
     try {
@@ -27,6 +25,10 @@ export default function AmontItem({ amount, price, id }) {
     }
   };
 
+  useEffect(()=> {
+    updatePrice()
+  },[])
+
   return (
     <>
       <div className="col-span-2 flex items-center">
@@ -36,7 +38,7 @@ export default function AmontItem({ amount, price, id }) {
             onClick={() => {
               setCount((cur) => cur + 1);
               updateItemCart(id, "increase");
-              updatePrice()
+              updatePrice();
             }}
             role="button"
           >
@@ -49,7 +51,7 @@ export default function AmontItem({ amount, price, id }) {
               if (count != 0) {
                 setCount((cur) => cur - 1);
                 updateItemCart(id);
-                updatePrice()
+                updatePrice();
               }
             }}
             role="button"
