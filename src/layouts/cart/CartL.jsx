@@ -1,6 +1,6 @@
 import React from "react";
 import CartItem from "./component/CartItem";
-import useAuth from "../../features/auth/hooks/use-auth";
+
 
 export default function CartL() {
   

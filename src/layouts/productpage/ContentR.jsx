@@ -1,11 +1,12 @@
 import React from "react";
 import useAuth from "../../features/auth/hooks/use-auth";
 
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function () {
-  const { buyNow, selectProduct,fetchItemCart } = useAuth();
+  const { buyNow, selectProduct } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <div className="">
@@ -27,17 +28,16 @@ export default function () {
                 {item.price}
               </div>
               <div className="flex flex-row gap-2">
-                <Link to="/cart">
-                  <button
-                    className="text-sx border bg-red-600 text-white px-2 py-2 rounded-lg"
-                    onClick={() => {
-                      buyNow(item);
-                      
-                    }}
-                  >
-                    BUY NOW
-                  </button>
-                </Link>
+                <button
+                  className="text-sx border bg-red-600 text-white px-2 py-2 rounded-lg"
+                  onClick={async () => {
+                    await buyNow(item);
+                    navigate("/cart");
+                  }}
+                >
+                  BUY NOW
+                </button>
+
                 <button
                   className="text-sx border bg-red-600 text-white px-2 py-2 rounded-lg"
                   onClick={() => {

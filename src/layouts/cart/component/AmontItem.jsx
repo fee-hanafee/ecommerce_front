@@ -6,8 +6,8 @@ import useRL from "../context/ContextRL";
 import { useEffect } from "react";
 
 export default function AmontItem({ amount, price, id }) {
-  const { cancelItem} = useAuth();
-  const { updatePrice } = useRL();
+  const { cart, cancelItem } = useAuth();
+  const { updatePrice, totalPrice } = useRL();
   const [count, setCount] = useState(amount);
 
   const updateItemCart = async (productId, item) => {
@@ -25,9 +25,9 @@ export default function AmontItem({ amount, price, id }) {
     }
   };
 
-  useEffect(()=> {
-    updatePrice()
-  },[])
+  useEffect(() => {
+    updatePrice();
+  }, []);
 
   return (
     <>
@@ -35,9 +35,9 @@ export default function AmontItem({ amount, price, id }) {
         <div className="flex gap-2 bg-gray-200">
           <div
             className="border px-2 border-red-600"
-            onClick={() => {
+            onClick={async () => {
               setCount((cur) => cur + 1);
-              updateItemCart(id, "increase");
+              await updateItemCart(id, "increase");
               updatePrice();
             }}
             role="button"
@@ -47,10 +47,10 @@ export default function AmontItem({ amount, price, id }) {
           <div>{count}</div>
           <div
             className="border px-2 border-red-600"
-            onClick={() => {
+            onClick={async () => {
               if (count != 0) {
                 setCount((cur) => cur - 1);
-                updateItemCart(id);
+                await updateItemCart(id);
                 updatePrice();
               }
             }}

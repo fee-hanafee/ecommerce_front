@@ -56,9 +56,11 @@ export default function ContentRight() {
           </li>
           <li>
             {authUser ? (
+              <Link to="/">
               <h4 onClick={logout} role="button">
                 Logout
               </h4>
+              </Link>
             ) : (
               <h4 onClick={() => setOpen((cur) => ({ ...cur, login: true }))}>
                 Login

@@ -16,15 +16,17 @@ function List({ children }) {
 
 export default function CartR() {
   const { submitOrder, handleaddress, address } = useAuth();
-  const { totalPrice, updatePrice } = useRL();
+  const { totalPrice, reLoad } = useRL();
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    updatePrice();
-  }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await submitOrder();
+    await reLoad();
+  };
 
   return (
-    <form onSubmit={submitOrder} className="px-4 rounded-lg mx-2 py-2 border">
+    <form onSubmit={handleSubmit} className="px-4 rounded-lg mx-2 py-2 border">
       <div>
         <h1 className="text-2xl font-semibold text-gray-500 px-3">
           Cart Total

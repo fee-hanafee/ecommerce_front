@@ -9,18 +9,37 @@ export function ContextRLProvider({ children }) {
   const { cart, fetchItemCart } = useAuth();
   const [totalPrice, setTotalPrice] = useState(0);
 
+  const [loading, setLoading] = useState(false);
+  
+ 
   const updatePrice = () => {
     fetchItemCart();
+  };
+
+  useEffect(() => {
     const total = cart.reduce((acc, el) => {
       acc += +el.product.price * el.amount;
       return acc;
     }, 0);
-
+console.log('dddddd')
     setTotalPrice(total);
+  }, [cart]);
+
+  const reLoad = async() => {
+    try {
+      setLoading(true);
+     
+     await fetchItemCart();
+    
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <ContextRL.Provider value={{ totalPrice, updatePrice }}>
+    <ContextRL.Provider value={{ totalPrice, updatePrice, loading, reLoad }}>
       {children}
     </ContextRL.Provider>
   );

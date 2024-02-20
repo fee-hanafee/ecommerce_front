@@ -4,7 +4,7 @@ import AdminR from "./AdminR";
 
 export default function Container() {
   return (
-    <div className="h-[calc(100vh-140px)]">
+    <div className="">
       <div className="grid grid-cols-12 h-full">
         <AdminL />
         <AdminR />

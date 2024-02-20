@@ -1,8 +1,10 @@
 import React from "react";
 import useAuth from "../../../features/auth/hooks/use-auth";
+import useAdmin from "../context/AdminContext";
 
 export default function Product() {
     const {product} = useAuth()
+    const {handleIsshow} = useAdmin()
 
     
    
@@ -12,10 +14,9 @@ export default function Product() {
         <h1 className="font-semibold">Product</h1>
       </div>
       <div className="p-2" >
-        <p onClick={()=> console.log(product)}>all product</p>
+        <p onClick={()=> handleIsshow('product')}>all product</p>
         <p>add new product</p>
-        <p>edit product</p>
-        <p>delete product</p>
+     
       </div>
     </div>
   );

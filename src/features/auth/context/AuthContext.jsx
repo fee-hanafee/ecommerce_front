@@ -68,7 +68,7 @@ export default function AuthContextProvider({ children }) {
   const buyNow = async (item) => {
     try {
       await userApi.createItemOnCart({ productId: item.id });
-      fetchItemCart();
+      await fetchItemCart();
     } catch (err) {
       toast.error("idk");
     }
@@ -84,11 +84,10 @@ export default function AuthContextProvider({ children }) {
     }
   };
 
-
   const fetchItemCart = async () => {
     try {
       const respon = await userApi.getCart();
-      console.log("first")
+    console.log(respon.data.item)
       setCart(respon.data.item);
     } catch (err) {
       console.log(err);
@@ -99,9 +98,9 @@ export default function AuthContextProvider({ children }) {
     setAddress(input);
   };
 
-  const submitOrder = async (e) => {
+  const submitOrder = async () => {
     try {
-      e.preventDefault();
+    
       if (address || address.trim() != "") {
         if (cart.length == 0) {
           return toast.error("add item");
@@ -109,6 +108,7 @@ export default function AuthContextProvider({ children }) {
 
         await userApi.createOrder({ adress: address });
         toast.success("order on the buss");
+        setAddress("")
       }
     } catch (err) {
       console.log(err);
@@ -134,7 +134,6 @@ export default function AuthContextProvider({ children }) {
         submitOrder,
         handleaddress,
         address,
-     
       }}
     >
       {children}
