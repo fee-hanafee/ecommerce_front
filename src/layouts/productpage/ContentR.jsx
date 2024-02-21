@@ -15,7 +15,7 @@ export default function () {
           return (
             <div
               key={item.id}
-              className="flex flex-col items-center justify-center bg-gray-100 rounded-lg w-[320px] px-4 py-4"
+              className="flex flex-col items-center justify-center bg-gray-100 rounded-lg w-[320px] px-4 py-4 shadow-[0_0_8px_rgb(0,0,0,0.25)]"
             >
               <div>
                 <img src={item?.image?.[0].image} />
@@ -25,11 +25,14 @@ export default function () {
                 {item.name}
               </div>
               <div className="font-semibold text-2xl text-red-500 py-2">
-                {item.price}
+                {item.price} THB
+              </div>
+              <div className="font-semibold text-2xl text-gray-500 py-2">
+               Color {item.color}
               </div>
               <div className="flex flex-row gap-2">
                 <button
-                  className="text-sx border bg-red-600 text-white px-2 py-2 rounded-lg"
+                  className="text-sx border bg-red-500 hover:bg-red-600 text-white px-2 py-2 rounded-lg"
                   onClick={async () => {
                     await buyNow(item);
                     navigate("/cart");
@@ -39,7 +42,7 @@ export default function () {
                 </button>
 
                 <button
-                  className="text-sx border bg-red-600 text-white px-2 py-2 rounded-lg"
+                  className="text-sx border bg-red-500 hover:bg-red-600 text-white px-2 py-2 rounded-lg"
                   onClick={() => {
                     buyNow(item);
                     toast.success("Add to cart");

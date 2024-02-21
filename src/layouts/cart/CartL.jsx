@@ -1,25 +1,21 @@
 import React from "react";
 import CartItem from "./component/CartItem";
 
-
 export default function CartL() {
-  
   return (
-    <div className="p-2 h-[500px] overflow-scroll ">
-       
-      <div className="flex justify-between">
+    <div className="p-2 min-h-[500px]  ">
+      <div className="flex justify-between p-2">
         <div>
-          <p>Product</p>
+          <p className="text-gray-600 font-bold">Product</p>
         </div>
-        <div className="flex gap-8">
+        <div className="flex gap-8 text-gray-600 font-bold">
           <p>Price</p>
           <p>Quantity</p>
           <p>Subtotal</p>
         </div>
       </div>
-      <hr className="w-full border-2 " />
+      <hr className="w-[97%] mx-auto border" />
       <CartItem />
-      <hr className="w-full border-2" />
     </div>
   );
 }

@@ -17,7 +17,7 @@ export default function AuthContextProvider({ children }) {
   const [address, setAddress] = useState("");
   const [cart, setCart] = useState([]);
 
-  useEffect(() => {
+  const getProduct = () => {
     productApi
       .fetchProduct()
       .then((item) => {
@@ -25,7 +25,10 @@ export default function AuthContextProvider({ children }) {
         setSelectProduct(item.data.product);
       })
       .catch((err) => console.log(err));
+  };
 
+  useEffect(() => {
+    getProduct();
     if (getToken()) {
       authApi
         .fetchMe()
@@ -87,7 +90,7 @@ export default function AuthContextProvider({ children }) {
   const fetchItemCart = async () => {
     try {
       const respon = await userApi.getCart();
-    console.log(respon.data.item)
+    
       setCart(respon.data.item);
     } catch (err) {
       console.log(err);
@@ -100,7 +103,6 @@ export default function AuthContextProvider({ children }) {
 
   const submitOrder = async () => {
     try {
-    
       if (address || address.trim() != "") {
         if (cart.length == 0) {
           return toast.error("add item");
@@ -108,7 +110,7 @@ export default function AuthContextProvider({ children }) {
 
         await userApi.createOrder({ adress: address });
         toast.success("order on the buss");
-        setAddress("")
+        setAddress("");
       }
     } catch (err) {
       console.log(err);
@@ -134,6 +136,7 @@ export default function AuthContextProvider({ children }) {
         submitOrder,
         handleaddress,
         address,
+        getProduct
       }}
     >
       {children}

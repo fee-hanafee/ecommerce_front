@@ -10,8 +10,7 @@ export function ContextRLProvider({ children }) {
   const [totalPrice, setTotalPrice] = useState(0);
 
   const [loading, setLoading] = useState(false);
-  
- 
+
   const updatePrice = () => {
     fetchItemCart();
   };
@@ -21,16 +20,15 @@ export function ContextRLProvider({ children }) {
       acc += +el.product.price * el.amount;
       return acc;
     }, 0);
-console.log('dddddd')
+
     setTotalPrice(total);
   }, [cart]);
 
-  const reLoad = async() => {
+  const reLoad = async () => {
     try {
       setLoading(true);
-     
-     await fetchItemCart();
-    
+
+      await fetchItemCart();
     } catch (err) {
       console.log(err);
     } finally {

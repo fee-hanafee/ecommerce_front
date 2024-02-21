@@ -32,9 +32,9 @@ export default function AmontItem({ amount, price, id }) {
   return (
     <>
       <div className="col-span-2 flex items-center">
-        <div className="flex gap-2 bg-gray-200">
+        <div className="flex gap-2 ">
           <div
-            className="border px-2 border-red-600"
+            className="border px-2 bg-gray-400 rounded-md text-white hover:bg-blue-500"
             onClick={async () => {
               setCount((cur) => cur + 1);
               await updateItemCart(id, "increase");
@@ -46,7 +46,7 @@ export default function AmontItem({ amount, price, id }) {
           </div>
           <div>{count}</div>
           <div
-            className="border px-2 border-red-600"
+            className="border px-2  bg-gray-400 rounded-md text-white hover:bg-red-500"
             onClick={async () => {
               if (count != 0) {
                 setCount((cur) => cur - 1);
@@ -60,7 +60,7 @@ export default function AmontItem({ amount, price, id }) {
           </div>
         </div>
       </div>
-      <div className="col-span-2 flex items-center px-2">{price * count}</div>
+      <div className="col-span-2 flex items-center px-2 text-red-500 font-bold  ">{price * count}</div>
     </>
   );
 }

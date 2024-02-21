@@ -1,13 +1,11 @@
 import React from "react";
 import useAuth from "../../features/auth/hooks/use-auth";
 import styled from "@emotion/styled";
-
-
-
+import { useNavigate } from "react-router-dom";
 
 export default function FeatureProduct() {
-  const { product } = useAuth();
-
+  const { product, buyNow } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <div className="h-[100%] bg-gray-700 flex flex-col">
@@ -15,13 +13,13 @@ export default function FeatureProduct() {
         PRODUCTS
       </div>
       <div>
-        <div className="flex overflow-auto p-2  gap-8" >
+        <div className="flex overflow-auto p-2  gap-8">
           {product?.map((item) => {
             return (
-              <div onClick={()=>console.log(item)}
+              <div
+                onClick={() => console.log(item)}
                 key={item.id}
                 className="h-[100%] shadow  bg-gray-600 rounded-md"
-               
               >
                 <div className="w-56 bg-white">
                   <img src={`${item?.image?.[0]?.image}`} />
@@ -32,7 +30,15 @@ export default function FeatureProduct() {
                     <h5 className="text-white font-semibold">{item.price} ฿</h5>
                   </div>
                   <div className="flex justify-center items-center py-2">
-                    <button className="text-white  px-6 py-1.5 rounded-full font-bold bg-red-500 hover:scale-110">BUY</button>
+                    <button
+                      className="text-white  px-6 py-1.5 rounded-full font-bold bg-red-500 hover:scale-110"
+                      onClick={() => {
+                        buyNow(item);
+                        navigate("/cart");
+                      }}
+                    >
+                      BUY
+                    </button>
                   </div>
                 </div>
               </div>

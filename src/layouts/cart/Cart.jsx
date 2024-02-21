@@ -6,7 +6,7 @@ import useRL from "./context/ContextRL";
 
 export default function Cart() {
   const { loading } = useRL();
-  console.log(loading)
+ 
   return (
     <>
       {loading && <Spinner />}
@@ -16,7 +16,7 @@ export default function Cart() {
             <h1 className="font-bold text-red-500 text-2xl">Shopping Cart</h1>
           </div>
           <div className="grid grid-cols-12 ">
-            <div className="border col-span-7">
+            <div className="border rounded-md  col-span-7">
               <CartL />
             </div>
             <div className="col-span-5">

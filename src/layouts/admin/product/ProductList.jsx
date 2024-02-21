@@ -5,6 +5,7 @@ import Modal from "../../../components/Modal";
 import Input from "../../../components/Input";
 import * as adminApi from "../../../api/admin-api";
 import Spinner from "../../../components/Spinner";
+import { toast } from "react-toastify";
 
 export default function ProductList() {
   const [edit, setEdit] = useState(false);
@@ -12,7 +13,7 @@ export default function ProductList() {
   const [input, setInput] = useState({ name: item?.name, price: item?.price });
   const [data, setData] = useState({});
   const [image, setImage] = useState(null);
-  const { product } = useAuth();
+  const { product, getProduct } = useAuth();
 
   const [loading, setLoading] = useState(false);
   const fileInputEl = useRef(null);
@@ -23,8 +24,6 @@ export default function ProductList() {
     setInput({ name: data?.name, price: data?.price });
   };
 
-  console.log(input);
-
   const canCel = () => {
     setInput({ name: "", price: "" });
     setImage(null);
@@ -32,7 +31,6 @@ export default function ProductList() {
 
   const handleChange = (e) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    console.log(input);
   };
   const submitEdit = async (e) => {
     try {
@@ -57,7 +55,7 @@ export default function ProductList() {
       }
 
       await adminApi.updateImage(formData);
-    
+      getProduct();
     } catch (err) {
       console.log(err);
     } finally {
@@ -65,9 +63,21 @@ export default function ProductList() {
     }
   };
 
+  const deleteProduct = async (id) => {
+    try {
+      setLoading(true);
+      await adminApi.deleteProduct(id);
+      toast.success("delete successfully");
+    } catch (err) {
+      console.log(first);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
-      {loading && <Spinner />} 
+      {loading && <Spinner />}
 
       {edit && (
         <Modal
@@ -125,22 +135,27 @@ export default function ProductList() {
       )}
 
       <div className="flex flex-wrap gap-4">
+        {loading && <Spinner />}
         {product?.map((el) => {
           const handleEdit = () => {
             editProduct(el);
           };
+
           return (
             <div key={el.id} className="bg-gray-200 rounded-lg p-3 mx-auto">
               <div>
-                <h1 className="font-bold">Product id : {el.id}</h1>
+                <h1 className="font-bold">PRODUCT ID : {el.id}</h1>
               </div>
               <div className="flex gap-3">
                 <div className="w-40">
                   <img src={el.image?.[0].image} className="bg-white" />
                 </div>
-                <div className=" border border-red-300">
-                  <p>Product name : {el.name}</p>
+                <div className="border-2 border-gray-300 px-1.5 py-2 rounded-md font-semibold text-sm">
+                  <p>Name : {el.name}</p>
                   <p>Price : {el.price}</p>
+                  <p>Color : {el.color}</p>
+                  <p>Brand : {el.brand.name}</p>
+                  <p>Type : {el.type.type}</p>
                 </div>
               </div>
               <div className="flex gap-4 justify-end py-1">
@@ -153,7 +168,10 @@ export default function ProductList() {
                 >
                   edit
                 </button>
-                <button className="bg-gray-300 px-2 rounded-md py-1.5 hover:bg-red-500 hover:text-white">
+                <button
+                  onClick={() => deleteProduct(el.id)}
+                  className="bg-gray-300 px-2 rounded-md py-1.5 hover:bg-red-500 hover:text-white"
+                >
                   Delete
                 </button>
               </div>

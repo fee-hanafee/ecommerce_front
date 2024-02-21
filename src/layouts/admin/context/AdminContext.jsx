@@ -12,14 +12,12 @@ export function AdminContextProvider({ children }) {
     order: "",
     product: "",
     customer: "",
+    addProduct:""
   });
- 
 
-  
   const getOrder = async () => {
     const item = await adminApi.getOrder();
     setOrder(item.data.order);
-   
   };
 
   const getCustomer = async () => {
@@ -29,23 +27,21 @@ export function AdminContextProvider({ children }) {
   };
 
   const handleIsshow = (name) => {
-    if(name == 'order') {
-        setIsShow( {order: "open",
-        product: "",
-        customoer: "",})
-    } else if(name =='product') {
-        setIsShow( {order: "",
-        product: "open",
-        customoer: "",})
-    } else {
-        setIsShow( {order: "",
-        product: "",
-        customer: "open",})
+    if (name == "order") {
+      setIsShow({ order: "open", product: "", customoer: "", addProduct: "" });
+    } else if (name == "product") {
+      setIsShow({ order: "", product: "open", customoer: "", addProduct: "" });
+    } else if (name == "customer") {
+      setIsShow({ order: "", product: "", customer: "open", addProduct: "" });
+    } else if (name == "addProduct") {
+      setIsShow({ order: "", product: "", customer: "", addProduct: "open" });
     }
-  }
+  };
 
   return (
-    <AdminContext.Provider value={{ getOrder, customer, getCustomer,isShow,handleIsshow,order }}>
+    <AdminContext.Provider
+      value={{ getOrder, customer, getCustomer, isShow, handleIsshow, order }}
+    >
       {children}
     </AdminContext.Provider>
   );
