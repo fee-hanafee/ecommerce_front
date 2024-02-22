@@ -35,6 +35,7 @@ export default function AuthContextProvider({ children }) {
         .then((res) => setAuthUser(res.data.user))
         .catch((err) => toast.error(err.response?.data.message))
         .finally(() => setInitialLoad(false));
+
     } else {
       setInitialLoad(false);
     }
@@ -90,7 +91,7 @@ export default function AuthContextProvider({ children }) {
   const fetchItemCart = async () => {
     try {
       const respon = await userApi.getCart();
-    
+
       setCart(respon.data.item);
     } catch (err) {
       console.log(err);
@@ -101,14 +102,17 @@ export default function AuthContextProvider({ children }) {
     setAddress(input);
   };
 
-  const submitOrder = async () => {
+  const submitOrder = async (image) => {
     try {
       if (address || address.trim() != "") {
         if (cart.length == 0) {
           return toast.error("add item");
         }
+        const formData = new FormData();
 
-        await userApi.createOrder({ adress: address });
+        formData.append("image", image);
+        formData.append("adress", address);
+        await userApi.createOrder(formData);
         toast.success("order on the buss");
         setAddress("");
       }
@@ -136,7 +140,7 @@ export default function AuthContextProvider({ children }) {
         submitOrder,
         handleaddress,
         address,
-        getProduct
+        getProduct,
       }}
     >
       {children}

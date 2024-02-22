@@ -39,11 +39,9 @@ export default function ProductList() {
       input.id = data.id;
       if (input.name && input.price) {
         await adminApi.updateProduct(input);
-      }
-      if (input.name) {
+      } else if (input.name) {
         await adminApi.updateProduct({ name: input.name, id: input.id });
-      }
-      if (input.price) {
+      } else if (input.price) {
         await adminApi.updateProduct({ price: input.price, id: input.id });
       }
 
@@ -52,10 +50,9 @@ export default function ProductList() {
       if (image) {
         formData.append("image", image);
         formData.append("id", data.id);
+        await adminApi.updateImage(formData);
       }
-
-      await adminApi.updateImage(formData);
-      getProduct();
+      await getProduct();
     } catch (err) {
       console.log(err);
     } finally {

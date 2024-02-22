@@ -18,7 +18,7 @@ export default function () {
               className="flex flex-col items-center justify-center bg-gray-100 rounded-lg w-[320px] px-4 py-4 shadow-[0_0_8px_rgb(0,0,0,0.25)]"
             >
               <div>
-                <img src={item?.image?.[0].image} />
+                <img src={item?.image?.[0]?.image} />
               </div>
               <hr className=" border border-red-500 w-full" />
               <div className="font-bold text-2xl text-gray-600 py-2">

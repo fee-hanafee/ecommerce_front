@@ -2,17 +2,19 @@ import { useState, createContext, useContext } from "react";
 
 import * as adminApi from "../../../api/admin-api";
 import * as publicApi from "../../../api/product-api";
+import { toast } from "react-toastify";
 
 const AdminContext = createContext();
 
 export function AdminContextProvider({ children }) {
   const [order, setOrder] = useState(null);
   const [customer, setCustomer] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [isShow, setIsShow] = useState({
     order: "",
     product: "",
     customer: "",
-    addProduct:""
+    addProduct: "",
   });
 
   const getOrder = async () => {
@@ -38,9 +40,63 @@ export function AdminContextProvider({ children }) {
     }
   };
 
+  const comfirmOrder = async (id) => {
+    try {
+      setLoading(true);
+      const data = {};
+      data.id = id;
+      data.payment = true;
+      await adminApi.updateOrder(data);
+      toast.success("CONFIRM PAYMENT");
+      getOrder();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const rejectOrder = async (id) => {
+    try {
+      setLoading(true);
+      await adminApi.deleteOrder(id);
+      getOrder();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deliver = async (id) => {
+    try {
+      setLoading(true);
+      const data = {};
+      data.id = id;
+      data.shipping = true;
+      await adminApi.updateOrder(data);
+      toast.success("CONFIRM ORDER");
+      getOrder();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <AdminContext.Provider
-      value={{ getOrder, customer, getCustomer, isShow, handleIsshow, order }}
+      value={{
+        getOrder,
+        customer,
+        getCustomer,
+        isShow,
+        handleIsshow,
+        order,
+        comfirmOrder,
+        rejectOrder,
+        deliver,
+        loading,
+      }}
     >
       {children}
     </AdminContext.Provider>

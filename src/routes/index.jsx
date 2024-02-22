@@ -8,6 +8,7 @@ import Container from "../layouts/Container";
 import Cart from "../layouts/cart/Cart";
 import { ContextRLProvider } from "../layouts/cart/context/ContextRL";
 import ProtextRoute from "../features/auth/components/ProtextRoute";
+import ProtextUser from "../features/auth/components/ProtextUser";
 
 const route = createBrowserRouter([
   {
@@ -34,7 +35,11 @@ const route = createBrowserRouter([
       },
       {
         path: "me",
-        element: <ProfilePage />,
+        element: (
+          <ProtextUser>
+            <ProfilePage />
+          </ProtextUser>
+        ),
       },
       {
         path: "/cart",
