@@ -18,7 +18,7 @@ export default function CartList({ cart, cancelItem }) {
                 </div>
                 <div className="col-span-3">
                   <img
-                    src={item.product.image[0].image}
+                    src={item.product?.image?.[0]?.image}
                     className="scale-150"
                     alt={item.product.name}
                   />
@@ -35,6 +35,7 @@ export default function CartList({ cart, cancelItem }) {
                   amount={item.amount}
                   price={item.product.price}
                   id={item.id}
+               
                 />
               </div>
             </div>

@@ -6,6 +6,7 @@ import validateInput from "../../../features/validation.js/validate-inputproduct
 import * as adminApi from "../../../api/admin-api";
 import { toast } from "react-toastify";
 import Spinner from "../../../components/Spinner";
+import useAuth from "../../../features/auth/hooks/use-auth";
 
 const initial = {
   name: "",
@@ -21,6 +22,8 @@ export default function AddProduct() {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const fileInputEl = useRef(null);
+
+  const {getProduct} =useAuth()
 
   const handleChange = (e) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -51,6 +54,7 @@ export default function AddProduct() {
       toast.success("create successfully");
       setInput({ name: "", price: "", color: "", brandId: "1", typeId: "1" });
       setImage(null);
+      await getProduct()
     } catch (err) {
       console.log(err);
     } finally {

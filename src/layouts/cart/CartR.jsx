@@ -29,9 +29,9 @@ export default function CartR() {
     try {
       setloading(true);
       e.preventDefault();
-      toast.success("upload slip success");
       await submitOrder(image);
       await reLoad();
+      toast.success("upload slip success");
     } catch (err) {
       console.log(err);
     } finally {

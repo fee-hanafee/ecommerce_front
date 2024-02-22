@@ -95,7 +95,7 @@ export default function ProductList() {
             <div className="w-40">
               <img
                 role="button"
-                src={image ? URL.createObjectURL(image) : item.image?.[0].image}
+                src={image ? URL.createObjectURL(image) : item?.image?.[0]?.image}
                 className="bg-white"
                 onClick={(e) => fileInputEl.current.click()}
               />
@@ -145,7 +145,7 @@ export default function ProductList() {
               </div>
               <div className="flex gap-3">
                 <div className="w-40">
-                  <img src={el.image?.[0].image} className="bg-white" />
+                  <img src={el.image?.[0]?.image} className="bg-white" />
                 </div>
                 <div className="border-2 border-gray-300 px-1.5 py-2 rounded-md font-semibold text-sm">
                   <p>Name : {el.name}</p>
