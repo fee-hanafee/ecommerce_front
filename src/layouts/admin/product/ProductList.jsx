@@ -65,6 +65,7 @@ export default function ProductList() {
       setLoading(true);
       await adminApi.deleteProduct(id);
       toast.success("delete successfully");
+      await getProduct();
     } catch (err) {
       console.log(first);
     } finally {
@@ -95,7 +96,9 @@ export default function ProductList() {
             <div className="w-40">
               <img
                 role="button"
-                src={image ? URL.createObjectURL(image) : item?.image?.[0]?.image}
+                src={
+                  image ? URL.createObjectURL(image) : item?.image?.[0]?.image
+                }
                 className="bg-white"
                 onClick={(e) => fileInputEl.current.click()}
               />
