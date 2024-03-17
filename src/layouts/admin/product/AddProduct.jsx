@@ -48,6 +48,7 @@ export default function AddProduct() {
 
       if (image) {
         formData.append("image", image);
+        console.log(image)
         formData.append("productId", respon.data.product.id);
       }
       await adminApi.createImage(formData);

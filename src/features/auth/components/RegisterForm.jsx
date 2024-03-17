@@ -18,7 +18,7 @@ export default function RegisterForm({ onClose }) {
   const [error, setError] = useState({});
   const { register } = useAuth();
 
-  console.log(input);
+ 
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
     setError({ ...error, [e.target.name]: "" });

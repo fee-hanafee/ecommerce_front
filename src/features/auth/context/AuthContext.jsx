@@ -6,6 +6,10 @@ import * as productApi from "../../../api/product-api";
 import * as userApi from "../../../api/user-api";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+
+import { regis } from "../../../redux/slice/registerSlice";
+import { useSelector } from "react-redux";
 
 export const AuthContext = createContext();
 
@@ -17,6 +21,8 @@ export default function AuthContextProvider({ children }) {
   const [address, setAddress] = useState("");
   const [cart, setCart] = useState([]);
 
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.R1);
   const getProduct = () => {
     productApi
       .fetchProduct()
@@ -35,17 +41,17 @@ export default function AuthContextProvider({ children }) {
         .then((res) => setAuthUser(res.data.user))
         .catch((err) => toast.error(err.response?.data.message))
         .finally(() => setInitialLoad(false));
-
     } else {
       setInitialLoad(false);
     }
   }, []);
 
   const register = async (user) => {
-    const respon = await authApi.register(user);
+    // const respon = await authApi.register(user);
 
-    setAuthUser(respon.data.newUser);
-    storeToken(respon.data.accessToken);
+    // setAuthUser(respon.data.newUser);
+    // storeToken(respon.data.accessToken);
+    dispatch(regis(user));
   };
 
   const login = async (user) => {
